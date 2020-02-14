@@ -15,29 +15,31 @@ def hello():
 @app.route("/predict")
 def get_predict():
 
-    # Tried to input the average when inputs are not specified, but couldnt make it
+    # Input means
 
-    #df = read_data()
-    #weather_avg = df['weathersit'].mean()
-    #temp_avg = df['temperature_C'].mean()
-    #feeling_avg = df['feeling_temperature_C'].mean()
-    #humidity_avg = df["humidity"].mean()
-    #windspeed_avg = df["windspeed"].mean()
-
-    #parameters["date"] = dt.datetime.fromisoformat(parameters["date"])
-    #parameters["weathersit"] = int(parameters.get("weathersit", weather_avg))
-    #parameters["temperature_C"] = float(parameters.get("temperature_C", temp_avg))
-    #parameters["feeling_temperature_C"] = float(parameters.get("feeling_temperature_C", feeling_avg))
-    #parameters["humidity"] = float(parameters.get("humidity", humidity_avg))
-    #parameters["windspeed"] = float(parameters.get("windspeed", windspeed_avg))
+    df = read_data()
+    weather_avg = df['weathersit'].mean()
+    temp_avg = df['temp'].mean()
+    feeling_avg = df['atemp'].mean()
+    humidity_avg = df["hum"].mean()
+    windspeed_avg = df["windspeed"].mean()
 
     parameters = dict(request.args)
-    parameters["weathersit"] = int(parameters["weathersit"])
+
     parameters["date"] = dt.datetime.fromisoformat(parameters["date"])
-    parameters["temperature_C"] = float(parameters["temperature_C"])
-    parameters["feeling_temperature_C"] = float(parameters["feeling_temperature_C"])
-    parameters["humidity"] = float(parameters["humidity"])
-    parameters["windspeed"] = float(parameters["windspeed"])
+    parameters["weathersit"] = int(parameters.get("weathersit", weather_avg))
+    parameters["temperature_C"] = float(parameters.get("temperature_C", temp_avg))
+    parameters["feeling_temperature_C"] = float(parameters.get("feeling_temperature_C", feeling_avg))
+    parameters["humidity"] = float(parameters.get("humidity", humidity_avg))
+    parameters["windspeed"] = float(parameters.get("windspeed", windspeed_avg))
+
+    #parameters["weathersit"] = int(parameters["weathersit"])
+    #parameters["date"] = dt.datetime.fromisoformat(parameters["date"])
+    #parameters["temperature_C"] = float(parameters["temperature_C"])
+    #parameters["feeling_temperature_C"] = float(parameters["feeling_temperature_C"])
+    #parameters["humidity"] = float(parameters["humidity"])
+    #parameters["windspeed"] = float(parameters["windspeed"])
+
     model = str(parameters["model"])
 
     start_prediction = dt.datetime.now()
